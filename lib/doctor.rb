@@ -1,1 +1,27 @@
+class Doctor
+    attr_reader :name
 
+    @@all = []
+
+    def initialize(name)
+        @name = name
+        @@all << self
+    end
+    
+
+    def self.all
+        @@all
+    end
+
+    def appointments
+        Appointment.all.select {|each| each.doctor == self}
+    end
+    def new_appointment(date, patient)
+        Appointment.new(date, patient, self)
+    end
+
+    def patients
+        appointments.collect {|each| each.patient}
+        
+    end
+end
